@@ -1,6 +1,6 @@
 # 🌐 Sushant Yaramwar - Web Developer Portfolio
 
-![Portfolio Banner](banner.png)
+![Portfolio Banner](banner.jpg)
 
 ## 🚀 Overview
 This is my **personal portfolio website**, designed and developed to showcase my projects, skills, and journey as a **Web Developer**.  
