@@ -1,6 +1,6 @@
 # 🌐 Sushant Yaramwar - Web Developer Portfolio
 
-![Portfolio Banner](https://placehold.co/1200x400/121212/ffffff?text=Sushant+Yaramwar+Portfolio)
+![Portfolio Banner](banner.png)
 
 ## 🚀 Overview
 This is my **personal portfolio website**, designed and developed to showcase my projects, skills, and journey as a **Web Developer**.  
