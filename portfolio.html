@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushant Yaramwar - Web Designer Portfolio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Default Orange Accent Color ( Sushant Dev look) */
+            --accent-color: #ff5500;
+            --accent-color-hover: #e54d00;
+        }
+
+        /* Use Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            /* Dark background */
+            color: #f0f0f0;
+            /* Light text */
+            min-height: 100vh;
+        }
+
+        /* Custom style to apply the dynamic accent color */
+        .accent-text {
+            color: var(--accent-color);
+        }
+
+        .accent-bg {
+            background-color: var(--accent-color);
+        }
+
+        .accent-border {
+            border-color: var(--accent-color);
+        }
+
+        .accent-hover:hover {
+            background-color: var(--accent-color-hover);
+        }
+
+        /* Style for the fixed sidebar on desktop */
+        @media (min-width: 1024px) {
+            #sidebar {
+                width: 250px;
+                flex-shrink: 4;
+            }
+        }
+
+        /* Smooth transition for theme change */
+        .color-picker-dot {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Style for the active color picker dot */
+        .color-picker-dot.active {
+            transform: scale(1.25);
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        /* Custom scrollbar for a dark theme */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col lg:flex-row min-h-screen">
+
+    <!-- 1. SIDEBAR NAVIGATION (Fixed on Desktop, Hidden on Mobile) -->
+    <nav id="sidebar"
+        class="hidden lg:flex flex-col bg-[#1a1a1a] shadow-lg border-r border-[#222] p-6 h-screen sticky top-0">
+        <div class="logo-area mb-12">
+            <h1 class="text-3xl font-bold">
+                <span class="accent-text">S</span>ushant| Dev
+                <!-- Mock square brackets from the screenshot -->
+                <span class="inline-block text-xl ml-1 leading-none">
+                    <span class="accent-text block h-2 w-2 border-t-2 border-l-2 accent-border"></span>
+                    <span
+                        class="accent-text block h-2 w-2 border-b-2 border-r-2 accent-border relative left-2 -top-2"></span>
+                </span>
+            </h1>
+        </div>
+
+        <ul class="space-y-4 flex-grow">
+            <li>
+                <a href="#home"
+                    class="flex items-center space-x-3 p-3 rounded-xl hover:bg-[#252525] transition-colors accent-text font-semibold">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#about"
+                    class="flex items-center space-x-3 p-3 rounded-xl hover:bg-[#252525] transition-colors text-gray-400 hover:text-white">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="#services"
+                    class="flex items-center space-x-3 p-3 rounded-xl hover:bg-[#252525] transition-colors text-gray-400 hover:text-white">
+                    <i data-lucide="list-checks" class="w-5 h-5"></i>
+                    <span>Services</span>
+                </a>
+            </li>
+            <li>
+                <a href="#portfolio"
+                    class="flex items-center space-x-3 p-3 rounded-xl hover:bg-[#252525] transition-colors text-gray-400 hover:text-white">
+                    <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    <span>Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contact"
+                    class="flex items-center space-x-3 p-3 rounded-xl hover:bg-[#252525] transition-colors text-gray-400 hover:text-white">
+                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <main class="flex-grow p-4 md:p-10 lg:p-16">
+
+        <!-- Mobile Navigation (Visible on Small Screens) -->
+        <div
+            class="lg:hidden flex justify-between items-center mb-6 sticky top-0 bg-[#121212] z-10 py-4 border-b border-[#222]">
+            <h1 class="text-2xl font-bold">
+                <span class="accent-text">S</span>ushant| Dev
+            </h1>
+            <button id="mobile-menu-toggle" class="p-2 rounded-lg accent-bg text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu-drawer"
+            class="fixed inset-0 z-20 bg-[#121212] transition-transform duration-300 transform -translate-x-full lg:hidden">
+            <div class="flex flex-col p-6 h-full">
+                <div class="flex justify-between items-center mb-10">
+                    <h1 class="text-3xl font-bold"><span class="accent-text">S</span>ushant| Dev</h1>
+                    <button id="mobile-menu-close" class="text-gray-400 hover:text-white p-2">
+                        <i data-lucide="x" class="w-8 h-8"></i>
+                    </button>
+                </div>
+                <ul class="space-y-6 text-xl">
+                    <li><a href="#home"
+                            class="block p-3 accent-text font-semibold hover:bg-[#252525] rounded-lg">Home</a></li>
+                    <li><a href="#about"
+                            class="block p-3 text-gray-400 hover:text-white hover:bg-[#252525] rounded-lg">About</a>
+                    </li>
+                    <li><a href="#services"
+                            class="block p-3 text-gray-400 hover:text-white hover:bg-[#252525] rounded-lg">Services</a>
+                    </li>
+                    <li><a href="#portfolio"
+                            class="block p-3 text-gray-400 hover:text-white hover:bg-[#252525] rounded-lg">Portfolio</a>
+                    </li>
+                    <li><a href="#contact"
+                            class="block p-3 text-gray-400 hover:text-white hover:bg-[#252525] rounded-lg">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- HOME SECTION (Mimics the main screenshot content) -->
+        <section id="home" class="min-h-[80vh] flex flex-col lg:flex-row items-center pt-8 lg:pt-0">
+
+            <!-- Left Text Content -->
+            <div class="lg:w-3/5 order-2 lg:order-1 mt-10 lg:mt-0">
+                <p class="text-3xl md:text-4xl font-light mb-4">Hello, my name is <span
+                        class="accent-text font-semibold">Sushant Yaramwar</span></p>
+                <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    I'm a <span class="bg-white text-[#121212] px-2 rounded-lg inline-block">Web Devloper</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-xl mb-10">
+                   I'm currently a student passionate about web development, open source, and creative digital solutions. I love building projects using **React.js** and **Node.js**.
+                </p>
+                <a href="#about"
+                    class="inline-block px-8 py-3 rounded-xl text-white font-bold text-lg accent-bg accent-hover transition-all duration-300 shadow-xl">
+                    More About Me
+                </a>
+            </div>
+
+            <!-- Right Image Area -->
+            <div class="lg:w-2/5 relative order-1 lg:order-2 w-full max-w-md lg:max-w-none">
+                <div class="relative w-full aspect-square md:aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
+                    <!-- Image of Alimi Mousaad - using a placeholder image -->
+                    <img src="my.jpg" alt="Professional Photo Placeholder" class="w-full h-full object-cover rounded-xl"
+                        onerror="this.onerror=null;this.src='https://placehold.co/800x1000/333333/ffffff?text=Your+Photo';">
+
+                    <!-- Mock orange corner brackets -->
+                    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                        <span
+                            class="absolute top-0 left-0 h-16 w-16 border-t-4 border-l-4 accent-border rounded-tl-xl"></span>
+                        <span
+                            class="absolute bottom-0 right-0 h-16 w-16 border-b-4 border-r-4 accent-border rounded-br-xl"></span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Other sections for a complete portfolio (simplified) -->
+
+        <section id="about" class="pt-24 md:pt-32">
+            <h3 class="text-4xl font-bold mb-8">About Me</h3>
+            <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-lg">
+                <p class="text-gray-300">I'm a passionate student pursuing Electronics and Telecommunication
+                    Engineering, deeply interested in web development and open-source innovation. I enjoy transforming
+                    ideas into interactive and impactful digital experiences using technologies like React.js, Node.js,
+                    and the MERN stack. I’m currently exploring React, Tailwind CSS, and MongoDB to build modern,
+                    responsive web applications. I believe in writing clean, efficient, and maintainable code while
+                    continuously learning and experimenting with new tools. Beyond coding, I love tackling real-world
+                    challenges through creative problem-solving and collaborative development.</p>
+            </div>
+        </section>
+
+        <section id="services" class="pt-24 md:pt-32">
+            <h3 class="text-4xl font-bold mb-8">Services</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#1a1a1a] p-6 rounded-xl shadow-lg">
+                    <i data-lucide="layout-grid" class="w-8 h-8 accent-text mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">Web Design</h4>
+                    <p class="text-gray-400">Creating intuitive, user-centric designs optimized for all devices.</p>
+                </div>
+                <div class="bg-[#1a1a1a] p-6 rounded-xl shadow-lg">
+                    <i data-lucide="code" class="w-8 h-8 accent-text mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">MERN-Stack Development</h4>
+                    <p class="text-gray-400">Bringing designs to life using MongoDB,Express.js,React.js,Node.js and Many
+                        More modern frameworks.</p>
+                </div>
+                <div class="bg-[#1a1a1a] p-6 rounded-xl shadow-lg">
+                    <i data-lucide="lightbulb" class="w-8 h-8 accent-text mb-4"></i>
+                    <h4 class="text-xl font-semibold mb-2">Problem Solving</h4>
+                    <p class="text-gray-400">Transforming ideas into solutions through logic, creativity, and cleancode.</p>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="pt-24 md:pt-32">
+            <h3 class="text-4xl font-bold mb-8">Portfolio</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Mock Project 1 -->
+                <div
+                    class="bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://placehold.co/600x400/222222/cccccc?text=Project+One" alt="Project Placeholder"
+                        class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold accent-text mb-1">project1</h4>
+                        <p class="text-gray-400">Role:===========1</p>
+                    </div>
+                </div>
+                <!-- Mock Project 2 -->
+                <div
+                    class="bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://placehold.co/600x400/222222/cccccc?text=Project+Two" alt="Project Placeholder"
+                        class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold accent-text mb-1">project2</h4>
+                        <p class="text-gray-400">Role:==============2</p>
+                    </div>
+                </div>
+                <!-- Mock Project 3 -->
+                <div
+                    class="bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <img src="https://placehold.co/600x400/222222/cccccc?text=Project+Three" alt="Project Placeholder"
+                        class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold accent-text mb-1">project3</h4>
+                        <p class="text-gray-400">Role:==================3</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="pt-24 md:pt-32 pb-16">
+            <h3 class="text-4xl font-bold mb-8">Contact me</h3>
+            <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-lg max-w-xl">
+                <form onsubmit="event.preventDefault(); showContactMessage();">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-300 mb-2">Name</label>
+                        <input type="text" id="name" required
+                            class="w-full p-3 rounded-lg bg-[#252525] border border-[#333] focus:ring-1 focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] text-white">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-300 mb-2">Email</label>
+                        <input type="email" id="email" required
+                            class="w-full p-3 rounded-lg bg-[#252525] border border-[#333] focus:ring-1 focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] text-white">
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-300 mb-2">Message</label>
+                        <textarea id="message" rows="4" required
+                            class="w-full p-3 rounded-lg bg-[#252525] border border-[#333] focus:ring-1 focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] text-white"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full px-6 py-3 rounded-xl text-white font-bold text-lg accent-bg accent-hover transition-all duration-300">
+                        Send Message
+                    </button>
+                    <p id="contact-status" class="mt-4 text-center text-sm hidden"></p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 3. COLOR PICKER/THEME SETTINGS (Fixed/Sticky) -->
+    <aside id="theme-settings"
+        class="fixed top-1/2 right-0 transform -translate-y-1/2 p-2 bg-[#1a1a1a] rounded-l-xl shadow-2xl border-l border-t border-b border-[#222] z-50 transition-transform duration-300 hover:translate-x-0 -translate-x-full lg:translate-x-0">
+        <!-- Toggle Button for Mobile/Tablet -->
+        <button id="settings-toggle"
+            class="absolute left-0 top-1/2 transform -translate-x-full -translate-y-1/2 p-2 bg-[#1a1a1a] rounded-l-xl lg:hidden">
+            <i data-lucide="settings" class="w-5 h-5 accent-text"></i>
+        </button>
+
+        <div class="flex flex-col items-center space-y-4 py-4 px-2 lg:p-0">
+            <!-- Settings Icon (from screenshot) -->
+            <i data-lucide="settings" class="w-6 h-6 text-gray-400"></i>
+
+            <!-- Theme Colors Panel -->
+            <div class="w-32 bg-[#252525] p-3 rounded-lg shadow-inner">
+                <p class="text-sm font-semibold text-gray-300 mb-3">Theme Colors</p>
+                <div id="color-picker" class="flex justify-between space-x-1">
+                    <!-- Color Dots -->
+                    <button onclick="setThemeColor('#ff5500')" style="background-color: #ff5500;"
+                        class="color-picker-dot w-5 h-5 rounded-full cursor-pointer active" data-color="#ff5500"
+                        aria-label="Set theme to orange"></button>
+                    <button onclick="setThemeColor('#ff3860')" style="background-color: #ff3860;"
+                        class="color-picker-dot w-5 h-5 rounded-full cursor-pointer" data-color="#ff3860"
+                        aria-label="Set theme to red"></button>
+                    <button onclick="setThemeColor('#00cc66')" style="background-color: #00cc66;"
+                        class="color-picker-dot w-5 h-5 rounded-full cursor-pointer" data-color="#00cc66"
+                        aria-label="Set theme to green"></button>
+                    <button onclick="setThemeColor('#00aaff')" style="background-color: #00aaff;"
+                        class="color-picker-dot w-5 h-5 rounded-full cursor-pointer" data-color="#00aaff"
+                        aria-label="Set theme to blue"></button>
+                    <button onclick="setThemeColor('#9933ff')" style="background-color: #9933ff;"
+                        class="color-picker-dot w-5 h-5 rounded-full cursor-pointer" data-color="#9933ff"
+                        aria-label="Set theme to purple"></button>
+                </div>
+            </div>
+
+            <i data-lucide="settings" class="w-6 h-6 text-gray-400"></i>
+        </div>
+    </aside>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+
+            // --- Theme Color Switching Logic ---
+            const root = document.documentElement;
+            const colorDots = document.querySelectorAll('.color-picker-dot');
+
+            // Function to lighten/darken the accent color for hover effects
+            function shadeColor(hex, percent) {
+                let R = parseInt(hex.substring(1, 3), 16);
+                let G = parseInt(hex.substring(3, 5), 16);
+                let B = parseInt(hex.substring(5, 7), 16);
+
+                R = parseInt(R * (100 + percent) / 100);
+                G = parseInt(G * (100 + percent) / 100);
+                B = parseInt(B * (100 + percent) / 100);
+
+                R = (R < 255) ? R : 255;
+                G = (G < 255) ? G : 255;
+                B = (B < 255) ? B : 255;
+
+                const RR = ((R.toString(16).length == 1) ? "0" + R.toString(16) : R.toString(16));
+                const GG = ((G.toString(16).length == 1) ? "0" + G.toString(16) : G.toString(16));
+                const BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
+
+                return "#" + RR + GG + BB;
+            }
+
+            window.setThemeColor = (color) => {
+                // Set the primary accent color
+                root.style.setProperty('--accent-color', color);
+
+                // Calculate and set the hover/darker accent color (e.g., 10% darker)
+                const hoverColor = shadeColor(color, -10);
+                root.style.setProperty('--accent-color-hover', hoverColor);
+
+                // Update active state for the color picker dots
+                colorDots.forEach(dot => dot.classList.remove('active'));
+                document.querySelector(`.color-picker-dot[data-color="${color}"]`).classList.add('active');
+
+                // Update the mobile menu toggle button color
+                const mobileToggle = document.getElementById('mobile-menu-toggle');
+                mobileToggle.style.backgroundColor = color;
+            };
+
+            // Initialize with the default color (Orange)
+            setThemeColor('#ff5500');
+
+
+            // --- Mobile Menu Logic ---
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+            const mobileNavLinks = mobileMenuDrawer.querySelectorAll('a');
+
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuDrawer.classList.remove('-translate-x-full');
+            });
+
+            mobileMenuClose.addEventListener('click', () => {
+                mobileMenuDrawer.classList.add('-translate-x-full');
+            });
+
+            // Close menu when a link is clicked
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuDrawer.classList.add('-translate-x-full');
+                });
+            });
+
+            // --- Contact Form Status Message (No real submission) ---
+            window.showContactMessage = () => {
+                const status = document.getElementById('contact-status');
+                status.textContent = 'Thank you for your message! I will get back to you soon.';
+                status.classList.remove('hidden');
+                status.classList.add('accent-text');
+                setTimeout(() => {
+                    status.classList.add('hidden');
+                    status.classList.remove('accent-text');
+                }, 4000);
+            };
+
+            // --- Theme Settings Toggle for Mobile/Tablet ---
+            const themeSettings = document.getElementById('theme-settings');
+            const settingsToggle = document.getElementById('settings-toggle');
+
+            // On mobile/tablet, show the settings panel on toggle click
+            settingsToggle.addEventListener('click', () => {
+                themeSettings.classList.toggle('-translate-x-full');
+                themeSettings.classList.toggle('translate-x-0');
+            });
+
+        });
+    </script>
+</body>
+
+</html>
